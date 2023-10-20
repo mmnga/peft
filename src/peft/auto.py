@@ -101,8 +101,8 @@ class _BaseAutoPeftModel:
         # If you specify a revision, it will be fixed to the same revision, so you can specify the base model revision.
         revision = kwargs.get("revision", None)
         base_revision = kwargs.get("base_revision", revision)
-        
-        base_model = target_class.from_pretrained(base_model_path, revision=base_revision, **kwargs)
+        kwargs["revision"] = base_revision
+        base_model = target_class.from_pretrained(base_model_path, **kwargs)
 
         return cls._target_peft_class.from_pretrained(
             base_model,
